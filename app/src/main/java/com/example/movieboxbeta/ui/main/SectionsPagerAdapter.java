@@ -35,7 +35,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         // Return a PlaceholderFragment (defined as a static inner class below).
 
         Fragment ret=null;
-
         switch(position)
         {
             case 0:
