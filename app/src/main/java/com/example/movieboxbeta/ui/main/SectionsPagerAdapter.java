@@ -68,6 +68,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
 
-        return TAB_TITLES.length;
+       // return TAB_TITLES.length;
+        return 2;
     }
 }
