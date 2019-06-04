@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MovieBoxBeta</string>
+    <string name="tab_text_1">Popular</string>
+    <string name="tab_text_2">TopRated</string>
+    <string name="tab_text_3">Upcoming</string>
+    <string name="tab_text_4">Now Playing</string>
+    <string name="tab_text_5">Latest</string>
+
+    <string name="API_KEY">ab6da60052ca37ee47ea2b3ef44ce07d</string>
+    <string name="baseURL">https://api.themoviedb.org/3/movie/</string>
+    <string name="imageURL">https://image.tmdb.org/t/p/w500</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
