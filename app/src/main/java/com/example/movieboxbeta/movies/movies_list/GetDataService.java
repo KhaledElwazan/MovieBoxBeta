@@ -22,7 +22,7 @@ public interface GetDataService {
     Call<Results>getLatest(@Query("api_key") String apikey);
 
 
-    @GET("up_coming")
+    @GET("now_playing")
     Call<Results>getNowPlaying(@Query("api_key") String apikey);
 
 }

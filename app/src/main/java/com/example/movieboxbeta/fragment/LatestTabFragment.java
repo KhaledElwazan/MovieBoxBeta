@@ -38,12 +38,10 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class LatestTabFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -62,7 +60,6 @@ public class LatestTabFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment LatestTabFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static LatestTabFragment newInstance(String param1, String param2) {
         LatestTabFragment fragment = new LatestTabFragment();
         Bundle args = new Bundle();
@@ -85,7 +82,7 @@ public class LatestTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_popular_tap, container, false);
+        View view = inflater.inflate(R.layout.fragment_latest_tab, container, false);
 
 
         GridView gridView = view.findViewById(R.id.dataGrid);
@@ -99,10 +96,15 @@ public class LatestTabFragment extends Fragment {
         call.enqueue(new Callback<Results>() {
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
+
+              // TODO: sometimes the JSON response comes with no list of results; needs correction
+
                 if (response.isSuccessful()) {
 
                     final List<Movie> results = response.body().getResults();
 
+                    if(results==null)
+                        System.out.println(response.body().getTotalPages());
 
                     new AsyncTask<List<Movie>, Void, List<Bitmap>>() {
 
@@ -124,7 +126,7 @@ public class LatestTabFragment extends Fragment {
 
 
                             } catch (Exception e) {
-                                Log.e("loading popular", e.toString());
+                                Log.e("loading latest", e.toString());
                             }
 
 
@@ -137,13 +139,16 @@ public class LatestTabFragment extends Fragment {
                             movieAdapter.notifyDataSetChanged();
                         }
                     }.execute(results);
+                }else
+                {
+                    System.out.println("------");
                 }
             }
 
             @Override
             public void onFailure(Call<Results> call, Throwable t) {
 
-                Log.e("loading popular", t.toString());
+                Log.e("loading latest", t.toString());
 
             }
         });
@@ -152,12 +157,6 @@ public class LatestTabFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -182,7 +181,6 @@ public class LatestTabFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
