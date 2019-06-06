@@ -15,9 +15,9 @@ public class MovieReviews implements Serializable
     @SerializedName("page")
     @Expose
     private Integer page;
-    @SerializedName("results")
+    @SerializedName("reviews")
     @Expose
-    private List<Result> results = null;
+    private List<Review> reviews = null;
     @SerializedName("total_pages")
     @Expose
     private Integer totalPages;
@@ -36,16 +36,16 @@ public class MovieReviews implements Serializable
     /**
      * 
      * @param id
-     * @param results
+     * @param reviews
      * @param totalResults
      * @param page
      * @param totalPages
      */
-    public MovieReviews(Integer id, Integer page, List<Result> results, Integer totalPages, Integer totalResults) {
+    public MovieReviews(Integer id, Integer page, List<Review> reviews, Integer totalPages, Integer totalResults) {
         super();
         this.id = id;
         this.page = page;
-        this.results = results;
+        this.reviews = reviews;
         this.totalPages = totalPages;
         this.totalResults = totalResults;
     }
@@ -76,16 +76,16 @@ public class MovieReviews implements Serializable
         return this;
     }
 
-    public List<Result> getResults() {
-        return results;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
-    public MovieReviews withResults(List<Result> results) {
-        this.results = results;
+    public MovieReviews withResults(List<Review> reviews) {
+        this.reviews = reviews;
         return this;
     }
 

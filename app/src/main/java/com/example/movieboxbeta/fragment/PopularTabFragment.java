@@ -16,7 +16,7 @@ import android.widget.GridView;
 import com.example.movieboxbeta.R;
 import com.example.movieboxbeta.movies.MovieAdapter;
 import com.example.movieboxbeta.movies.RetrofitClientInstance;
-import com.example.movieboxbeta.movies.movies_list.GetDataService;
+import com.example.movieboxbeta.movies.movies_list.GetDataServiceForList;
 import com.example.movieboxbeta.movies.movies_list.Movie;
 import com.example.movieboxbeta.movies.movies_list.Results;
 
@@ -92,7 +92,7 @@ public class PopularTabFragment extends Fragment {
         gridView.setAdapter(movieAdapter);
 
 
-        GetDataService service = RetrofitClientInstance.getRetrofitInstance(getString(R.string.baseURL)).create(GetDataService.class);
+        GetDataServiceForList service = RetrofitClientInstance.getRetrofitInstance(getString(R.string.baseURL)).create(GetDataServiceForList.class);
         Call<Results> call = service.getPopular(getString(R.string.API_KEY));
 
         call.enqueue(new Callback<Results>() {

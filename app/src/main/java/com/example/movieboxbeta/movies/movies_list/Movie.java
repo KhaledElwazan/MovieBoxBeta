@@ -12,6 +12,27 @@ public class Movie implements Serializable
         return posterURL;
     }
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "posterURL='" + posterURL + '\'' +
+                ", posterPath='" + posterPath + '\'' +
+                ", adult=" + adult +
+                ", overview='" + overview + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", genreIds=" + genreIds +
+                ", id=" + id +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", originalLanguage='" + originalLanguage + '\'' +
+                ", title='" + title + '\'' +
+                ", backdropPath='" + backdropPath + '\'' +
+                ", popularity=" + popularity +
+                ", voteCount=" + voteCount +
+                ", video=" + video +
+                ", voteAverage=" + voteAverage +
+                '}';
+    }
+
     public void setPosterURL(String posterURL) {
         this.posterURL = posterURL;
     }

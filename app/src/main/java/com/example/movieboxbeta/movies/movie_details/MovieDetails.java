@@ -8,6 +8,36 @@ import com.google.gson.annotations.SerializedName;
 
 public class MovieDetails implements Serializable
 {
+    @Override
+    public String toString() {
+        return "MovieDetails{" +
+                "adult=" + adult +
+                ", backdropPath='" + backdropPath + '\'' +
+                ", belongsToCollection=" + belongsToCollection +
+                ", budget=" + budget +
+                ", genres=" + genres +
+                ", homepage='" + homepage + '\'' +
+                ", id=" + id +
+                ", imdbId='" + imdbId + '\'' +
+                ", originalLanguage='" + originalLanguage + '\'' +
+                ", originalTitle='" + originalTitle + '\'' +
+                ", overview='" + overview + '\'' +
+                ", popularity=" + popularity +
+                ", posterPath=" + posterPath +
+                ", productionCompanies=" + productionCompanies +
+                ", productionCountries=" + productionCountries +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", revenue=" + revenue +
+                ", runtime=" + runtime +
+                ", spokenLanguages=" + spokenLanguages +
+                ", status='" + status + '\'' +
+                ", tagline='" + tagline + '\'' +
+                ", title='" + title + '\'' +
+                ", video=" + video +
+                ", voteAverage=" + voteAverage +
+                ", voteCount=" + voteCount +
+                '}';
+    }
 
     @SerializedName("adult")
     @Expose

@@ -1,11 +1,11 @@
 
-package com.example.movies.videos;
+package com.example.movieboxbeta.movies.videos;
 
 import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result implements Serializable
+public class Video implements Serializable
 {
 
     @SerializedName("id")
@@ -38,7 +38,7 @@ public class Result implements Serializable
      * No args constructor for use in serialization
      * 
      */
-    public Result() {
+    public Video() {
     }
 
     /**
@@ -52,7 +52,7 @@ public class Result implements Serializable
      * @param key
      * @param size
      */
-    public Result(String id, String iso6391, String iso31661, String key, String name, String site, Integer size, String type) {
+    public Video(String id, String iso6391, String iso31661, String key, String name, String site, Integer size, String type) {
         super();
         this.id = id;
         this.iso6391 = iso6391;
@@ -72,7 +72,7 @@ public class Result implements Serializable
         this.id = id;
     }
 
-    public Result withId(String id) {
+    public Video withId(String id) {
         this.id = id;
         return this;
     }
@@ -85,7 +85,7 @@ public class Result implements Serializable
         this.iso6391 = iso6391;
     }
 
-    public Result withIso6391(String iso6391) {
+    public Video withIso6391(String iso6391) {
         this.iso6391 = iso6391;
         return this;
     }
@@ -98,7 +98,7 @@ public class Result implements Serializable
         this.iso31661 = iso31661;
     }
 
-    public Result withIso31661(String iso31661) {
+    public Video withIso31661(String iso31661) {
         this.iso31661 = iso31661;
         return this;
     }
@@ -111,7 +111,7 @@ public class Result implements Serializable
         this.key = key;
     }
 
-    public Result withKey(String key) {
+    public Video withKey(String key) {
         this.key = key;
         return this;
     }
@@ -124,7 +124,7 @@ public class Result implements Serializable
         this.name = name;
     }
 
-    public Result withName(String name) {
+    public Video withName(String name) {
         this.name = name;
         return this;
     }
@@ -137,7 +137,7 @@ public class Result implements Serializable
         this.site = site;
     }
 
-    public Result withSite(String site) {
+    public Video withSite(String site) {
         this.site = site;
         return this;
     }
@@ -150,7 +150,7 @@ public class Result implements Serializable
         this.size = size;
     }
 
-    public Result withSize(Integer size) {
+    public Video withSize(Integer size) {
         this.size = size;
         return this;
     }
@@ -163,7 +163,7 @@ public class Result implements Serializable
         this.type = type;
     }
 
-    public Result withType(String type) {
+    public Video withType(String type) {
         this.type = type;
         return this;
     }

@@ -1,5 +1,5 @@
 
-package com.example.movies.videos;
+package com.example.movieboxbeta.movies.videos;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,9 +12,9 @@ public class Results implements Serializable
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("results")
+    @SerializedName("videos")
     @Expose
-    private List<Result> results = null;
+    private List<Video> videos = null;
     private final static long serialVersionUID = 783974421779319256L;
 
     /**
@@ -27,12 +27,12 @@ public class Results implements Serializable
     /**
      * 
      * @param id
-     * @param results
+     * @param videos
      */
-    public Results(Integer id, List<Result> results) {
+    public Results(Integer id, List<Video> videos) {
         super();
         this.id = id;
-        this.results = results;
+        this.videos = videos;
     }
 
     public Integer getId() {
@@ -48,16 +48,16 @@ public class Results implements Serializable
         return this;
     }
 
-    public List<Result> getResults() {
-        return results;
+    public List<Video> getVideos() {
+        return videos;
     }
 
-    public void setResults(List<Result> results) {
-        this.results = results;
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
     }
 
-    public Results withResults(List<Result> results) {
-        this.results = results;
+    public Results withResults(List<Video> videos) {
+        this.videos = videos;
         return this;
     }
 
