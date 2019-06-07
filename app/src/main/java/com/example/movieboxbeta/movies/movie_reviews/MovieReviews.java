@@ -8,6 +8,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class MovieReviews implements Serializable
 {
+    @Override
+    public String toString() {
+        return "MovieReviews{" +
+                "id=" + id +
+                ", page=" + page +
+                ", reviews=" + reviews +
+                ", totalPages=" + totalPages +
+                ", totalResults=" + totalResults +
+                '}';
+    }
 
     @SerializedName("id")
     @Expose

@@ -16,7 +16,7 @@ import android.widget.GridView;
 import com.example.movieboxbeta.R;
 import com.example.movieboxbeta.movies.MovieAdapter;
 import com.example.movieboxbeta.movies.RetrofitClientInstance;
-import com.example.movieboxbeta.movies.movies_list.GetDataServiceForList;
+import com.example.movieboxbeta.movies.GetDataService;
 import com.example.movieboxbeta.movies.movies_list.Movie;
 import com.example.movieboxbeta.movies.movies_list.Results;
 
@@ -90,7 +90,7 @@ public class UpcomingTabFragment extends Fragment {
         gridView.setAdapter(movieAdapter);
 
 
-        GetDataServiceForList service = RetrofitClientInstance.getRetrofitInstance(getString(R.string.baseURL)).create(GetDataServiceForList.class);
+        GetDataService service = RetrofitClientInstance.getRetrofitInstance(getString(R.string.baseURL)).create(GetDataService.class);
         Call<Results> call = service.getUpComing(getString(R.string.API_KEY));
 
         call.enqueue(new Callback<Results>() {

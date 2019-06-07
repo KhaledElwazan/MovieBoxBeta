@@ -7,6 +7,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class Review implements Serializable
 {
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id='" + id + '\'' +
+                ", author='" + author + '\'' +
+                ", content='" + content + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 
     @SerializedName("id")
     @Expose
