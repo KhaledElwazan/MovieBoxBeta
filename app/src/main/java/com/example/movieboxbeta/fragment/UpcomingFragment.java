@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.example.movieboxbeta.R;
+import com.example.movieboxbeta.movies.GetDataService;
 import com.example.movieboxbeta.movies.MovieAdapter;
 import com.example.movieboxbeta.movies.RetrofitClientInstance;
-import com.example.movieboxbeta.movies.GetDataService;
 import com.example.movieboxbeta.movies.movies_list.Movie;
 import com.example.movieboxbeta.movies.movies_list.Results;
 
@@ -32,12 +32,12 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link UpcomingTabFragment.OnFragmentInteractionListener} interface
+ * {@link UpcomingFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link UpcomingTabFragment#newInstance} factory method to
+ * Use the {@link UpcomingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UpcomingTabFragment extends Fragment {
+public class UpcomingFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -48,7 +48,7 @@ public class UpcomingTabFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private MovieAdapter movieAdapter;
 
-    public UpcomingTabFragment() {
+    public UpcomingFragment() {
         // Required empty public constructor
     }
 
@@ -58,10 +58,10 @@ public class UpcomingTabFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment UpcomingTabFragment.
+     * @return A new instance of fragment UpcomingFragment.
      */
-    public static UpcomingTabFragment newInstance(String param1, String param2) {
-        UpcomingTabFragment fragment = new UpcomingTabFragment();
+    public static UpcomingFragment newInstance(String param1, String param2) {
+        UpcomingFragment fragment = new UpcomingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,7 +82,7 @@ public class UpcomingTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_upcoming_tab, container, false);
+        View view = inflater.inflate(R.layout.fragment_data_display, container, false);
 
 
         GridView gridView = view.findViewById(R.id.dataGrid);

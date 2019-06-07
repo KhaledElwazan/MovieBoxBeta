@@ -8,11 +8,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.movieboxbeta.R;
-import com.example.movieboxbeta.fragment.LatestTabFragment;
-import com.example.movieboxbeta.fragment.NowPlayingTabFragment;
-import com.example.movieboxbeta.fragment.UpcomingTabFragment;
-import com.example.movieboxbeta.fragment.PopularTabFragment;
-import com.example.movieboxbeta.fragment.TopRatedTabFragment;
+import com.example.movieboxbeta.fragment.LatestFragment;
+import com.example.movieboxbeta.fragment.NowPlayingFragment;
+import com.example.movieboxbeta.fragment.PopularFragment;
+import com.example.movieboxbeta.fragment.TopRatedFragment;
+import com.example.movieboxbeta.fragment.UpcomingFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -38,19 +38,19 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         switch(position)
         {
             case 0:
-                ret=new PopularTabFragment();
+                ret = new PopularFragment();
                 break;
             case 1:
-                ret=new TopRatedTabFragment();
+                ret = new TopRatedFragment();
                 break;
             case 2:
-                ret=new UpcomingTabFragment();
+                ret = new UpcomingFragment();
                 break;
             case 3:
-                ret=new NowPlayingTabFragment();
+                ret = new NowPlayingFragment();
                 break;
             case 4:
-                ret=new LatestTabFragment();
+                ret = new LatestFragment();
         }
 
 

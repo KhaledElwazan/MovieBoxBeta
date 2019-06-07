@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.example.movieboxbeta.R;
+import com.example.movieboxbeta.movies.GetDataService;
 import com.example.movieboxbeta.movies.MovieAdapter;
 import com.example.movieboxbeta.movies.RetrofitClientInstance;
-import com.example.movieboxbeta.movies.GetDataService;
 import com.example.movieboxbeta.movies.movies_list.Movie;
 import com.example.movieboxbeta.movies.movies_list.Results;
 
@@ -32,12 +32,12 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TopRatedTabFragment.OnFragmentInteractionListener} interface
+ * {@link LatestFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TopRatedTabFragment#newInstance} factory method to
+ * Use the {@link LatestFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TopRatedTabFragment extends Fragment {
+public class LatestFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -48,7 +48,7 @@ public class TopRatedTabFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private MovieAdapter movieAdapter;
 
-    public TopRatedTabFragment() {
+    public LatestFragment() {
         // Required empty public constructor
     }
 
@@ -58,11 +58,10 @@ public class TopRatedTabFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TopRatedTabFragment.
+     * @return A new instance of fragment LatestFragment.
      */
-
-    public static TopRatedTabFragment newInstance(String param1, String param2) {
-        TopRatedTabFragment fragment = new TopRatedTabFragment();
+    public static LatestFragment newInstance(String param1, String param2) {
+        LatestFragment fragment = new LatestFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -83,8 +82,7 @@ public class TopRatedTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_top_rated, container, false);
+        View view = inflater.inflate(R.layout.fragment_data_display, container, false);
 
 
         GridView gridView = view.findViewById(R.id.dataGrid);
@@ -93,15 +91,20 @@ public class TopRatedTabFragment extends Fragment {
 
 
         GetDataService service = RetrofitClientInstance.getRetrofitInstance(getString(R.string.baseURL)).create(GetDataService.class);
-        Call<Results> call = service.getTopRated(getString(R.string.API_KEY));
+        Call<Results> call = service.getLatest(getString(R.string.API_KEY));
 
         call.enqueue(new Callback<Results>() {
             @Override
             public void onResponse(Call<Results> call, Response<Results> response) {
+
+              // TODO: sometimes the JSON response comes with no list of results; needs correction
+
                 if (response.isSuccessful()) {
 
                     final List<Movie> results = response.body().getResults();
 
+                    if(results==null)
+                        System.out.println(response.body().getTotalPages());
 
                     new AsyncTask<List<Movie>, Void, List<Bitmap>>() {
 
@@ -123,7 +126,7 @@ public class TopRatedTabFragment extends Fragment {
 
 
                             } catch (Exception e) {
-                                Log.e("loading popular", e.toString());
+                                Log.e("loading latest", e.toString());
                             }
 
 
@@ -136,13 +139,16 @@ public class TopRatedTabFragment extends Fragment {
                             movieAdapter.notifyDataSetChanged();
                         }
                     }.execute(results);
+                }else
+                {
+                    System.out.println("------");
                 }
             }
 
             @Override
             public void onFailure(Call<Results> call, Throwable t) {
 
-                Log.e("loading popular", t.toString());
+                Log.e("loading latest", t.toString());
 
             }
         });
@@ -150,7 +156,6 @@ public class TopRatedTabFragment extends Fragment {
 
         return view;
     }
-
 
 
     @Override
@@ -176,7 +181,6 @@ public class TopRatedTabFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-
         void onFragmentInteraction(Uri uri);
     }
 }

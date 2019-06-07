@@ -1,13 +1,16 @@
 
 package com.example.movieboxbeta.movies.videos;
 
-import java.io.Serializable;
-import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.List;
+
 public class Results implements Serializable
 {
+    private final static long serialVersionUID = -8270249560984899830L;
 
     @SerializedName("id")
     @Expose
@@ -15,17 +18,15 @@ public class Results implements Serializable
     @SerializedName("videos")
     @Expose
     private List<Video> videos = null;
-    private final static long serialVersionUID = 783974421779319256L;
-
     /**
      * No args constructor for use in serialization
-     * 
+     *
      */
     public Results() {
     }
 
     /**
-     * 
+     *
      * @param id
      * @param videos
      */
@@ -33,6 +34,14 @@ public class Results implements Serializable
         super();
         this.id = id;
         this.videos = videos;
+    }
+
+    @Override
+    public String toString() {
+        return "Results{" +
+                "id=" + id +
+                ", videos=" + videos +
+                '}';
     }
 
     public Integer getId() {
@@ -43,22 +52,12 @@ public class Results implements Serializable
         this.id = id;
     }
 
-    public Results withId(Integer id) {
-        this.id = id;
-        return this;
-    }
-
     public List<Video> getVideos() {
         return videos;
     }
 
     public void setVideos(List<Video> videos) {
         this.videos = videos;
-    }
-
-    public Results withResults(List<Video> videos) {
-        this.videos = videos;
-        return this;
     }
 
 }

@@ -1,12 +1,13 @@
 
 package com.example.movieboxbeta.movies.videos;
 
-import java.io.Serializable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Video implements Serializable
-{
+import java.io.Serializable;
+
+public class Video implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -32,17 +33,15 @@ public class Video implements Serializable
     @SerializedName("type")
     @Expose
     private String type;
-    private final static long serialVersionUID = 7650528391007597328L;
+    private final static long serialVersionUID = 5941631704546353845L;
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public Video() {
     }
 
     /**
-     * 
      * @param site
      * @param iso6391
      * @param id
@@ -72,22 +71,12 @@ public class Video implements Serializable
         this.id = id;
     }
 
-    public Video withId(String id) {
-        this.id = id;
-        return this;
-    }
-
     public String getIso6391() {
         return iso6391;
     }
 
     public void setIso6391(String iso6391) {
         this.iso6391 = iso6391;
-    }
-
-    public Video withIso6391(String iso6391) {
-        this.iso6391 = iso6391;
-        return this;
     }
 
     public String getIso31661() {
@@ -98,22 +87,12 @@ public class Video implements Serializable
         this.iso31661 = iso31661;
     }
 
-    public Video withIso31661(String iso31661) {
-        this.iso31661 = iso31661;
-        return this;
-    }
-
     public String getKey() {
         return key;
     }
 
     public void setKey(String key) {
         this.key = key;
-    }
-
-    public Video withKey(String key) {
-        this.key = key;
-        return this;
     }
 
     public String getName() {
@@ -124,22 +103,12 @@ public class Video implements Serializable
         this.name = name;
     }
 
-    public Video withName(String name) {
-        this.name = name;
-        return this;
-    }
-
     public String getSite() {
         return site;
     }
 
     public void setSite(String site) {
         this.site = site;
-    }
-
-    public Video withSite(String site) {
-        this.site = site;
-        return this;
     }
 
     public Integer getSize() {
@@ -150,11 +119,6 @@ public class Video implements Serializable
         this.size = size;
     }
 
-    public Video withSize(Integer size) {
-        this.size = size;
-        return this;
-    }
-
     public String getType() {
         return type;
     }
@@ -162,10 +126,4 @@ public class Video implements Serializable
     public void setType(String type) {
         this.type = type;
     }
-
-    public Video withType(String type) {
-        this.type = type;
-        return this;
-    }
-
 }

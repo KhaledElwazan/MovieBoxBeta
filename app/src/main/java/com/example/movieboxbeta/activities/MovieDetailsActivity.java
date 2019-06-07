@@ -5,9 +5,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -15,11 +15,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.movieboxbeta.R;
+import com.example.movieboxbeta.movies.GetDataService;
 import com.example.movieboxbeta.movies.RetrofitClientInstance;
 import com.example.movieboxbeta.movies.movie_details.MovieDetails;
 import com.example.movieboxbeta.movies.movie_reviews.MovieReviews;
-import com.example.movieboxbeta.movies.GetDataService;
-import com.example.movieboxbeta.movies.movie_reviews.Review;
 import com.example.movieboxbeta.movies.movies_list.Movie;
 import com.example.movieboxbeta.movies.videos.Results;
 import com.example.movieboxbeta.movies.videos.Video;
@@ -200,12 +199,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
                             String data="";
 
-                            for(Video video:videos)
-                            {
-
-
-
-                            }
+//                            for(Video video:videos)
+//                            {
+//
+//
+//
+//                            }
 
                             movieDetails.loadData(data, "text/html", "utf-8");
 

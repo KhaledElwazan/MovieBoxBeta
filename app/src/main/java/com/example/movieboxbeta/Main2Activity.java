@@ -16,11 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.movieboxbeta.fragment.LatestTabFragment;
-import com.example.movieboxbeta.fragment.NowPlayingTabFragment;
-import com.example.movieboxbeta.fragment.PopularTabFragment;
-import com.example.movieboxbeta.fragment.TopRatedTabFragment;
-import com.example.movieboxbeta.fragment.UpcomingTabFragment;
+import com.example.movieboxbeta.fragment.LatestFragment;
+import com.example.movieboxbeta.fragment.NowPlayingFragment;
+import com.example.movieboxbeta.fragment.PopularFragment;
+import com.example.movieboxbeta.fragment.TopRatedFragment;
+import com.example.movieboxbeta.fragment.UpcomingFragment;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,7 +47,7 @@ public class Main2Activity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        Fragment fragment = new PopularTabFragment();
+        Fragment fragment = new PopularFragment();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.contentFragment, fragment);
@@ -98,20 +98,20 @@ public class Main2Activity extends AppCompatActivity
 
         if (id == R.id.latest) {
 
-            fragment = new LatestTabFragment();
+            fragment = new LatestFragment();
 
         } else if (id == R.id.nowPlaying) {
-            fragment = new NowPlayingTabFragment();
+            fragment = new NowPlayingFragment();
 
         } else if (id == R.id.popular) {
-            fragment = new PopularTabFragment();
+            fragment = new PopularFragment();
 
         } else if (id == R.id.topRated) {
-            fragment = new TopRatedTabFragment();
+            fragment = new TopRatedFragment();
 
         } else if (id == R.id.upcoming) {
 
-            fragment = new UpcomingTabFragment();
+            fragment = new UpcomingFragment();
 
         }
 
