@@ -126,11 +126,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
 
 
-                            String data = "<hr><h5>Language: </h5>" + movie.getOriginalLanguage();
+                            String data = "<hr><h5>Language: </h5>" + (movie.getOriginalLanguage() == null ? "NA" : movie.getOriginalLanguage());
                             data += "</br>" + "<h5>Adult: </h5>" + (movie.getAdult() ? "Yes" : "No");
                             data += "</br>" + "<h5>Overview: </h5>" + movie.getOverview() + "</br>";
-                            data += "<h5>Homepage: </h5><a href=\"" + movie.getHomepage() + "\">"+movie.getHomepage()+"</a></br>";
-                            data += "<h5>Duration: </h5>" + movie.getRuntime().toString() + " minutes</br>";
+                            data += "<h5>Homepage: </h5><a href=\"" + (movie.getHomepage() == null ? "NA" : movie.getHomepage()) + "\">" + (movie.getHomepage() == null ? "NA" : movie.getHomepage()) + "</a></br>";
+                            data += "<h5>Duration: </h5>" + (movie.getRuntime().toString() != null ? movie.getRuntime() : "NA") + " minutes</br>";
                             data+="<hr>";
 
                             movieDetails.loadData(data, "text/html", "utf-8");

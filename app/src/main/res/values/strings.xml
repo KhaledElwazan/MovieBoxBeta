@@ -7,7 +7,7 @@
     <string name="tab_text_5">Latest</string>
 
     <string name="API_KEY">ab6da60052ca37ee47ea2b3ef44ce07d</string>
-    <string name="baseURL">https://api.themoviedb.org/3/movie/</string>
+    <string name="baseURL">https://api.themoviedb.org/3/</string>
     <string name="imageURL">https://image.tmdb.org/t/p/w500</string>
 
 

@@ -6,40 +6,42 @@ import com.example.movieboxbeta.movies.movies_list.Results;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface GetDataService {
 
 
-
-    @GET("popular")
+    @GET("movie/popular")
     Call<Results> getPopular(@Query("api_key") String apikey);
 
 
-    @GET("top_rated")
+    @GET("movie/top_rated")
     Call<Results>getTopRated(@Query("api_key") String apikey);
 
-    @GET("upcoming")
+    @GET("movie/upcoming")
     Call<Results>getUpComing(@Query("api_key") String apikey);
 
-    @GET("latest")
+    @GET("movie/latest")
     Call<Results>getLatest(@Query("api_key") String apikey);
 
 
-    @GET("now_playing")
+    @GET("movie/now_playing")
     Call<Results>getNowPlaying(@Query("api_key") String apikey);
 
 
-    @GET("{movie_id}")
+    @GET("movie/{movie_id}")
     Call<MovieDetails> getMovieDetails(@Path("movie_id") String movie_id, @Query("api_key") String apikey);
 
 
-    @GET("{movie_id}/videos")
+    @GET("movie/{movie_id}/videos")
     Call<com.example.movieboxbeta.movies.videos.Results> getMovieVideos(@Path("movie_id") String movie_id, @Query("api_key") String apikey);
 
-    @GET("{movie_id}/reviews")
+    @GET("movie/{movie_id}/reviews")
     Call<MovieReviews> getMovieReviews(@Path("movie_id") String movie_id, @Query("api_key") String apikey);
+
+
+    @GET("search/movie")
+    Call<Results> getSearchByQuery(@Query("api_key") String apikey, @Query("query") String query);
 
 }
