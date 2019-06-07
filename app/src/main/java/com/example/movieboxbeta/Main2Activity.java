@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.movieboxbeta.fragment.FavoriteFragment;
 import com.example.movieboxbeta.fragment.LatestFragment;
 import com.example.movieboxbeta.fragment.NowPlayingFragment;
 import com.example.movieboxbeta.fragment.PopularFragment;
@@ -113,6 +114,8 @@ public class Main2Activity extends AppCompatActivity
 
             fragment = new UpcomingFragment();
 
+        } else if (id == R.id.favorite) {
+            fragment = new FavoriteFragment();
         }
 
         FragmentManager fm = getSupportFragmentManager();

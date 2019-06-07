@@ -5,16 +5,22 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.movieboxbeta.R;
+import com.example.movieboxbeta.db.MovieDB;
 import com.example.movieboxbeta.movies.GetDataService;
 import com.example.movieboxbeta.movies.RetrofitClientInstance;
 import com.example.movieboxbeta.movies.movie_details.MovieDetails;
@@ -41,6 +47,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private ImageView poster;
     private ScrollView view;
     private WebView movieDetails;
+
+    private MovieDB movieDB;
 
     // TODO: create gui and infrastructure for the MovieDetails Fragment
 
@@ -219,6 +227,77 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     }
                 });
             }
+
+            favorite = findViewById(R.id.favButton);
+            favorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    if (movieDB == null)
+                        movieDB = MovieDB.getInstance(context);
+
+                    if (!isFavorited) {
+
+                        Snackbar.make(view, "Added to favorite movie list", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        favorite.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fav_icon));
+                        isFavorited = true;
+                        movieDB.getMovieDBDao().insert(movie);
+
+                    } else {
+                        Snackbar.make(view, "Removed from favorite movie list", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                        favorite.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fav_icon_hollow));
+                        isFavorited = false;
+                        movieDB.getMovieDBDao().delete(movie);
+                    }
+                    if (movieDB != null)
+                        movieDB.cleanUp();
+                }
+
+            });
+
+
+            if (movieDB == null)
+                movieDB = MovieDB.getInstance(context);
+
+            new AsyncTask<Movie, Void, Boolean>() {
+                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                @Override
+                protected Boolean doInBackground(Movie... pars) {
+
+                    List<Movie> results = movieDB.getMovieDBDao().getAll();
+
+                    for (Movie t : results) {
+
+
+                        if (t.equals(pars[0]))
+                            return true;
+
+                    }
+
+
+                    return false;
+                }
+
+
+                @Override
+                protected void onPostExecute(Boolean aBoolean) {
+                    isFavorited = aBoolean;
+
+                    if (isFavorited) {
+                        favorite.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fav_icon));
+                    } else
+                        favorite.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.fav_icon_hollow));
+
+                    movieDB.cleanUp();
+                }
+
+
+            }.execute(movie);
+
+
+
 
 
         } else {// TODO error while loading movie details
