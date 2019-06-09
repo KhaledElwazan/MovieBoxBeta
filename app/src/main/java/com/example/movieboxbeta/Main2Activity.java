@@ -20,13 +20,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.movieboxbeta.fragment.FavoriteFragment;
-import com.example.movieboxbeta.fragment.LatestFragment;
-import com.example.movieboxbeta.fragment.NowPlayingFragment;
-import com.example.movieboxbeta.fragment.PopularFragment;
+import com.example.movieboxbeta.fragment.DataDisplayFragment;
 import com.example.movieboxbeta.fragment.SearchFragment;
-import com.example.movieboxbeta.fragment.TopRatedFragment;
-import com.example.movieboxbeta.fragment.UpcomingFragment;
+
+import static com.example.movieboxbeta.fragment.DataDisplayFragment.Categories.POPULAR;
 
 public class Main2Activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -97,7 +94,11 @@ public class Main2Activity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        Fragment fragment = new PopularFragment();
+        Fragment fragment = new DataDisplayFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("category", POPULAR);
+        fragment.setArguments(bundle);
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.contentFragment, fragment);
@@ -143,29 +144,35 @@ public class Main2Activity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Fragment fragment = null;
+        Fragment fragment = new DataDisplayFragment();
+
+
+        Bundle bundle = new Bundle();
 
 
         if (id == R.id.latest) {
 
-            fragment = new LatestFragment();
+            bundle.putInt("category", DataDisplayFragment.Categories.LATEST);
+
 
         } else if (id == R.id.nowPlaying) {
-            fragment = new NowPlayingFragment();
+            bundle.putInt("category", DataDisplayFragment.Categories.NOW_PLAYING);
 
         } else if (id == R.id.popular) {
-            fragment = new PopularFragment();
+            bundle.putInt("category", DataDisplayFragment.Categories.POPULAR);
 
         } else if (id == R.id.topRated) {
-            fragment = new TopRatedFragment();
+            bundle.putInt("category", DataDisplayFragment.Categories.TOP_RATED);
 
         } else if (id == R.id.upcoming) {
 
-            fragment = new UpcomingFragment();
+            bundle.putInt("category", DataDisplayFragment.Categories.UPCOMING);
 
         } else if (id == R.id.favorite) {
-            fragment = new FavoriteFragment();
+            bundle.putInt("category", DataDisplayFragment.Categories.FAVORITE);
         }
+
+        fragment.setArguments(bundle);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
