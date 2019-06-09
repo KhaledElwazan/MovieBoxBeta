@@ -2,6 +2,7 @@ package com.example.movieboxbeta.movies;
 
 import com.example.movieboxbeta.movies.movie_details.MovieDetails;
 import com.example.movieboxbeta.movies.movie_reviews.MovieReviews;
+import com.example.movieboxbeta.movies.movies_list.Movie;
 import com.example.movieboxbeta.movies.movies_list.Results;
 
 import retrofit2.Call;
@@ -24,6 +25,9 @@ public interface GetDataService {
 
     @GET("movie/latest")
     Call<Results>getLatest(@Query("api_key") String apikey);
+
+    @GET("movie/latest")
+    Call<Movie> getSingleLatest(@Query("api_key") String apikey);
 
 
     @GET("movie/now_playing")

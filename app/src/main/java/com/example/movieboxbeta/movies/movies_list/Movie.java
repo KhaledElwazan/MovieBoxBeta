@@ -19,6 +19,7 @@ import java.util.Objects;
 
 @Entity
 public class Movie implements Serializable {
+
     @ColumnInfo(name = "vote_count")
     @SerializedName("vote_count")
     @Expose

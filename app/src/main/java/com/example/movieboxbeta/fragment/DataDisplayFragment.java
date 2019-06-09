@@ -191,16 +191,91 @@ public class DataDisplayFragment extends Fragment {
                 call = service.getUpComing(getString(R.string.API_KEY));
                 break;
             case LATEST:
-                call = service.getLatest(getString(R.string.API_KEY));
+
+                Call<Movie> tCall = service.getSingleLatest(getString(R.string.API_KEY));
+
+                tCall.enqueue(new Callback<Movie>() {
+                    @Override
+                    public void onResponse(Call<Movie> call, Response<Movie> response) {
+
+                        System.out.println(response.body());
+
+                        if (response.isSuccessful()) {
+                            final List<Movie> results = new ArrayList<>();
+                            results.add(response.body());
+
+
+                            new AsyncTask<List<Movie>, Void, List<Bitmap>>() {
+
+
+                                private ProgressDialog dialog;
+
+                                @Override
+                                protected void onPreExecute() {
+
+
+                                    dialog = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
+                                }
+
+                                @Override
+                                protected List<Bitmap> doInBackground(List<Movie>... lists) {
+
+                                    List<Bitmap> posters = new ArrayList<>();
+
+                                    try {
+                                        for (int i = 0; i < lists[0].size(); i++) {
+                                            InputStream inputStream = null;
+
+                                            lists[0].get(i).setPosterURL(getContext().getString(R.string.imageURL) + lists[0].get(i).getPosterPath());
+
+                                            inputStream = new URL(lists[0].get(i).getPosterURL()).openStream();
+
+                                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                                            posters.add(bitmap);
+
+                                        }
+                                    } catch (IOException e) {
+                                        Log.e("loading latest", e.toString());
+
+                                    }
+
+                                    return posters;
+                                }
+
+                                @Override
+                                protected void onPostExecute(List<Bitmap> bitmaps) {
+                                    if (dialog.isShowing()) {
+                                        dialog.dismiss();
+                                        dialog.cancel();
+                                    }
+
+                                    movieAdapter.setMovies(results, bitmaps);
+                                    movieAdapter.notifyDataSetChanged();
+
+                                }
+                            }.execute(results);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Movie> call, Throwable t) {
+
+                    }
+                });
+
                 break;
 
 
         }
 
-        if (category != FAVORITE)
+        if (category != FAVORITE && category != LATEST)
             call.enqueue(new Callback<Results>() {
                 @Override
                 public void onResponse(Call<Results> call, Response<Results> response) {
+
+                    System.out.println(response.body());
+
                     if (response.isSuccessful()) {
 
                         final List<Movie> results = response.body().getResults();
@@ -261,7 +336,7 @@ public class DataDisplayFragment extends Fragment {
                 @Override
                 public void onFailure(Call<Results> call, Throwable t) {
 
-                    Log.e("loading popular", t.toString());
+                    Log.e("DataDisplayFragment", t.toString());
 
                 }
             });
@@ -303,7 +378,7 @@ public class DataDisplayFragment extends Fragment {
 
 
                     } catch (Exception e) {
-                        Log.e("loading favorite", e.toString());
+                        Log.e("DataDisplayFragment", e.toString());
                     }
 
                     movieAdapter.setMovies(results, posters);
