@@ -23,8 +23,9 @@ public interface GetDataService {
     @GET("movie/upcoming")
     Call<Results>getUpComing(@Query("api_key") String apikey);
 
+
     @GET("movie/latest")
-    Call<Results>getLatest(@Query("api_key") String apikey);
+    Call<Object> getLatest(@Query("api_key") String apikey);
 
     @GET("movie/latest")
     Call<Movie> getSingleLatest(@Query("api_key") String apikey);

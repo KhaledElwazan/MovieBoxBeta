@@ -94,67 +94,26 @@ public class DataDisplayFragment extends Fragment {
 
             View view = getView();
 
+            if (movieDB == null)
+                movieDB = MovieDB.getInstance(this.getContext());
 
             movieDB = MovieDB.getInstance(this.getContext());
 
-            new AsyncTask<Void, Void, Boolean>() {
 
+            new AsyncTask<Void, Void, List<Movie>>() {
 
-                private ProgressDialog dialog;
 
                 @Override
-                protected void onPreExecute() {
-
-
-                    dialog = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
+                protected List<Movie> doInBackground(Void... voids) {
+                    return movieDB.getMovieDBDao().getAll();
                 }
 
                 @Override
-                protected Boolean doInBackground(Void... voids) {
-
-
-                    final List<Movie> results = movieDB.getMovieDBDao().getAll();
-
-
-                    List<Bitmap> posters = new ArrayList<>();
-
-                    try {
-                        for (int i = 0; i < results.size(); i++) {
-                            InputStream inputStream = null;
-
-                            inputStream = new URL(results.get(i).getPosterURL()).openStream();
-                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                            posters.add(bitmap);
-                        }
-
-
-                    } catch (Exception e) {
-                        Log.e("loading favorite", e.toString());
-                    }
-
-                    movieAdapter.setMovies(results, posters);
-
-
-                    return true;
-
-
-                }
-
-                @Override
-                protected void onPostExecute(Boolean aBoolean) {
-
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                        dialog.cancel();
-                    }
-
-
-                    movieAdapter.notifyDataSetChanged();
+                protected void onPostExecute(List<Movie> movies) {
+                    loadData(movies);
                     movieDB.cleanUp();
-
                 }
             }.execute();
-
 
         }
 
@@ -192,77 +151,21 @@ public class DataDisplayFragment extends Fragment {
                 break;
             case LATEST:
 
-                Call<Movie> tCall = service.getSingleLatest(getString(R.string.API_KEY));
-
-                tCall.enqueue(new Callback<Movie>() {
-                    @Override
-                    public void onResponse(Call<Movie> call, Response<Movie> response) {
-
-                        System.out.println(response.body());
-
-                        if (response.isSuccessful()) {
-                            final List<Movie> results = new ArrayList<>();
-                            results.add(response.body());
-
-
-                            new AsyncTask<List<Movie>, Void, List<Bitmap>>() {
-
-
-                                private ProgressDialog dialog;
-
-                                @Override
-                                protected void onPreExecute() {
-
-
-                                    dialog = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
-                                }
-
-                                @Override
-                                protected List<Bitmap> doInBackground(List<Movie>... lists) {
-
-                                    List<Bitmap> posters = new ArrayList<>();
-
-                                    try {
-                                        for (int i = 0; i < lists[0].size(); i++) {
-                                            InputStream inputStream = null;
-
-                                            lists[0].get(i).setPosterURL(getContext().getString(R.string.imageURL) + lists[0].get(i).getPosterPath());
-
-                                            inputStream = new URL(lists[0].get(i).getPosterURL()).openStream();
-
-                                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                                            posters.add(bitmap);
-
-                                        }
-                                    } catch (IOException e) {
-                                        Log.e("loading latest", e.toString());
-
-                                    }
-
-                                    return posters;
-                                }
-
-                                @Override
-                                protected void onPostExecute(List<Bitmap> bitmaps) {
-                                    if (dialog.isShowing()) {
-                                        dialog.dismiss();
-                                        dialog.cancel();
-                                    }
-
-                                    movieAdapter.setMovies(results, bitmaps);
-                                    movieAdapter.notifyDataSetChanged();
-
-                                }
-                            }.execute(results);
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<Movie> call, Throwable t) {
-
-                    }
-                });
+//                Call<Object> tCall = service.getLatest(getString(R.string.API_KEY));
+//
+//                tCall.enqueue(new Callback<Object>() {
+//                    @Override
+//                    public void onResponse(Call<Object> call, Response<Object> response) {
+//
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<Object> call, Throwable t) {
+//
+//                    }
+//                });
 
                 break;
 
@@ -276,60 +179,13 @@ public class DataDisplayFragment extends Fragment {
 
                     System.out.println(response.body());
 
+
                     if (response.isSuccessful()) {
 
                         final List<Movie> results = response.body().getResults();
 
+                        loadData(results);
 
-                        new AsyncTask<List<Movie>, Void, List<Bitmap>>() {
-
-
-                            private ProgressDialog dialog;
-
-                            @Override
-                            protected void onPreExecute() {
-
-
-                                dialog = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
-                            }
-
-                            @Override
-                            protected List<Bitmap> doInBackground(List<Movie>... lists) {
-
-                                List<Bitmap> posters = new ArrayList<>();
-
-                                try {
-                                    for (int i = 0; i < lists[0].size(); i++) {
-                                        InputStream inputStream = null;
-
-                                        lists[0].get(i).setPosterURL(getContext().getString(R.string.imageURL) + lists[0].get(i).getPosterPath());
-
-                                        inputStream = new URL(lists[0].get(i).getPosterURL()).openStream();
-
-                                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                                        posters.add(bitmap);
-
-                                    }
-                                } catch (IOException e) {
-                                    Log.e("loading popular", e.toString());
-
-                                }
-
-                                return posters;
-                            }
-
-                            @Override
-                            protected void onPostExecute(List<Bitmap> bitmaps) {
-                                if (dialog.isShowing()) {
-                                    dialog.dismiss();
-                                    dialog.cancel();
-                                }
-
-                                movieAdapter.setMovies(results, bitmaps);
-                                movieAdapter.notifyDataSetChanged();
-
-                            }
-                        }.execute(results);
                     }
                 }
 
@@ -340,69 +196,31 @@ public class DataDisplayFragment extends Fragment {
 
                 }
             });
-        else {
+        else if (category == FAVORITE) {
             //refresh the fav
 
 
             movieDB = MovieDB.getInstance(this.getContext());
 
-            new AsyncTask<Void, Void, Boolean>() {
 
+            new AsyncTask<Void, Void, List<Movie>>() {
 
-                private ProgressDialog dialog;
 
                 @Override
-                protected void onPreExecute() {
-
-
-                    dialog = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
+                protected List<Movie> doInBackground(Void... voids) {
+                    return movieDB.getMovieDBDao().getAll();
                 }
 
                 @Override
-                protected Boolean doInBackground(Void... voids) {
-
-
-                    final List<Movie> results = movieDB.getMovieDBDao().getAll();
-
-
-                    List<Bitmap> posters = new ArrayList<>();
-
-                    try {
-                        for (int i = 0; i < results.size(); i++) {
-                            InputStream inputStream = null;
-
-                            inputStream = new URL(results.get(i).getPosterURL()).openStream();
-                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                            posters.add(bitmap);
-                        }
-
-
-                    } catch (Exception e) {
-                        Log.e("DataDisplayFragment", e.toString());
-                    }
-
-                    movieAdapter.setMovies(results, posters);
-
-
-                    return true;
-
-
-                }
-
-                @Override
-                protected void onPostExecute(Boolean aBoolean) {
-
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                        dialog.cancel();
-                    }
-
-
-                    movieAdapter.notifyDataSetChanged();
+                protected void onPostExecute(List<Movie> movies) {
+                    loadData(movies);
                     movieDB.cleanUp();
-
                 }
             }.execute();
+
+
+        } else {
+
         }
 
 
@@ -445,5 +263,59 @@ public class DataDisplayFragment extends Fragment {
     public interface OnFragmentInteractionListener {
 
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    public void loadData(final List<Movie> results) {
+        new AsyncTask<List<Movie>, Void, List<Bitmap>>() {
+
+
+            private ProgressDialog dialog;
+
+            @Override
+            protected void onPreExecute() {
+
+
+                dialog = ProgressDialog.show(getContext(), "Loading", "Wait while loading...");
+            }
+
+            @Override
+            protected List<Bitmap> doInBackground(List<Movie>... lists) {
+
+                List<Bitmap> posters = new ArrayList<>();
+
+                try {
+                    for (int i = 0; i < lists[0].size(); i++) {
+                        InputStream inputStream = null;
+
+                        lists[0].get(i).setPosterURL(getContext().getString(R.string.imageURL) + lists[0].get(i).getPosterPath());
+
+                        inputStream = new URL(lists[0].get(i).getPosterURL()).openStream();
+
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        posters.add(bitmap);
+
+                    }
+                } catch (IOException e) {
+                    Log.e("loading popular", e.toString());
+
+                }
+
+                return posters;
+            }
+
+            @Override
+            protected void onPostExecute(List<Bitmap> bitmaps) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                    dialog.cancel();
+                }
+
+                movieAdapter.setMovies(results, bitmaps);
+                movieAdapter.notifyDataSetChanged();
+
+            }
+        }.execute(results);
+
     }
 }
