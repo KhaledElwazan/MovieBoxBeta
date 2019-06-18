@@ -8,4 +8,4 @@ Project is created with:
 * HTML
 
 ## Showcase and Screenshots
-(.shots/1.jpg)
+(1.jpg)
