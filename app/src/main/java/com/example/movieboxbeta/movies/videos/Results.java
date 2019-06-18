@@ -10,14 +10,14 @@ import java.util.List;
 
 public class Results implements Serializable
 {
-    private final static long serialVersionUID = -8270249560984899830L;
-
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("videos")
+    private final static long serialVersionUID = -2990944167726625608L;
+    @SerializedName("results")
     @Expose
-    private List<Video> videos = null;
+    private List<Video> results = null;
+
     /**
      * No args constructor for use in serialization
      *
@@ -28,20 +28,12 @@ public class Results implements Serializable
     /**
      *
      * @param id
-     * @param videos
+     * @param results
      */
-    public Results(Integer id, List<Video> videos) {
+    public Results(Integer id, List<Video> results) {
         super();
         this.id = id;
-        this.videos = videos;
-    }
-
-    @Override
-    public String toString() {
-        return "Results{" +
-                "id=" + id +
-                ", videos=" + videos +
-                '}';
+        this.results = results;
     }
 
     public Integer getId() {
@@ -52,12 +44,19 @@ public class Results implements Serializable
         this.id = id;
     }
 
-    public List<Video> getVideos() {
-        return videos;
+    public List<Video> getResults() {
+        return results;
     }
 
-    public void setVideos(List<Video> videos) {
-        this.videos = videos;
+    public void setResults(List<Video> results) {
+        this.results = results;
     }
 
+    @Override
+    public String toString() {
+        return "Results{" +
+                "id=" + id +
+                ", results=" + results +
+                '}';
+    }
 }

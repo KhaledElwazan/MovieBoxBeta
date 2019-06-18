@@ -1,10 +1,11 @@
 
 package com.example.movieboxbeta.movies.movie_details;
 
-import java.io.Serializable;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class MovieDetails implements Serializable
 {
@@ -89,7 +90,7 @@ public class MovieDetails implements Serializable
     private String releaseDate;
     @SerializedName("revenue")
     @Expose
-    private Integer revenue;
+    private Long revenue;
     @SerializedName("runtime")
     @Expose
     private Integer runtime;
@@ -151,7 +152,7 @@ public class MovieDetails implements Serializable
      * @param productionCompanies
      * @param tagline
      */
-    public MovieDetails(Boolean adult, String backdropPath, Object belongsToCollection, Integer budget, List<Genre> genres, String homepage, Integer id, String imdbId, String originalLanguage, String originalTitle, String overview, Double popularity, Object posterPath, List<ProductionCompany> productionCompanies, List<ProductionCountry> productionCountries, String releaseDate, Integer revenue, Integer runtime, List<SpokenLanguage> spokenLanguages, String status, String tagline, String title, Boolean video, Double voteAverage, Integer voteCount) {
+    public MovieDetails(Boolean adult, String backdropPath, Object belongsToCollection, Integer budget, List<Genre> genres, String homepage, Integer id, String imdbId, String originalLanguage, String originalTitle, String overview, Double popularity, Object posterPath, List<ProductionCompany> productionCompanies, List<ProductionCountry> productionCountries, String releaseDate, Long revenue, Integer runtime, List<SpokenLanguage> spokenLanguages, String status, String tagline, String title, Boolean video, Double voteAverage, Integer voteCount) {
         super();
         this.adult = adult;
         this.backdropPath = backdropPath;
@@ -388,15 +389,15 @@ public class MovieDetails implements Serializable
         return this;
     }
 
-    public Integer getRevenue() {
+    public Long getRevenue() {
         return revenue;
     }
 
-    public void setRevenue(Integer revenue) {
+    public void setRevenue(Long revenue) {
         this.revenue = revenue;
     }
 
-    public MovieDetails withRevenue(Integer revenue) {
+    public MovieDetails withRevenue(Long revenue) {
         this.revenue = revenue;
         return this;
     }

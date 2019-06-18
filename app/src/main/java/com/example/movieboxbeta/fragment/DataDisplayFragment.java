@@ -182,7 +182,8 @@ public class DataDisplayFragment extends Fragment {
 
                     if (response.isSuccessful()) {
 
-                        final List<Movie> results = response.body().getResults();
+                        List<Movie> results = response.body().getResults();
+
 
                         loadData(results);
 
@@ -197,7 +198,6 @@ public class DataDisplayFragment extends Fragment {
                 }
             });
         else if (category == FAVORITE) {
-            //refresh the fav
 
 
             movieDB = MovieDB.getInstance(this.getContext());
@@ -220,6 +220,32 @@ public class DataDisplayFragment extends Fragment {
 
 
         } else {
+
+            Call<Movie> tCall = service.getSingleLatest(getString(R.string.API_KEY));
+
+            tCall.enqueue(new Callback<Movie>() {
+                @Override
+                public void onResponse(Call<Movie> call, Response<Movie> response) {
+
+                    System.out.println(response.body());
+
+
+                    if (response.isSuccessful()) {
+                        Movie movie = response.body();
+                        List<Movie> list = new ArrayList<>();
+                        list.add(movie);
+                        loadData(list);
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<Movie> call, Throwable t) {
+
+                }
+            });
+
 
         }
 

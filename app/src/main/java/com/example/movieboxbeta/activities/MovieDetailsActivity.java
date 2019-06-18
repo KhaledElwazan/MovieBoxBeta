@@ -25,6 +25,7 @@ import com.example.movieboxbeta.movies.GetDataService;
 import com.example.movieboxbeta.movies.RetrofitClientInstance;
 import com.example.movieboxbeta.movies.movie_details.MovieDetails;
 import com.example.movieboxbeta.movies.movie_reviews.MovieReviews;
+import com.example.movieboxbeta.movies.movie_reviews.Review;
 import com.example.movieboxbeta.movies.movies_list.Movie;
 import com.example.movieboxbeta.movies.videos.Results;
 import com.example.movieboxbeta.movies.videos.Video;
@@ -49,6 +50,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private WebView movieDetails;
 
     private MovieDB movieDB;
+
+    private String data = "";
 
     // TODO: create gui and infrastructure for the MovieDetails Fragment
 
@@ -111,6 +114,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
 // the display view
             movieDetails = findViewById(R.id.movieDetails);
 
+
 // loading details
             {
 
@@ -126,12 +130,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
 
 
-                            String data = "<hr><h5>Language: </h5>" + (movie.getOriginalLanguage() == null ? "NA" : movie.getOriginalLanguage());
-                            data += "</br>" + "<h5>Adult: </h5>" + (movie.getAdult() ? "Yes" : "No");
-                            data += "</br>" + "<h5>Overview: </h5>" + movie.getOverview() + "</br>";
-                            data += "<h5>Homepage: </h5><a href=\"" + (movie.getHomepage() == null ? "NA" : movie.getHomepage()) + "\">" + (movie.getHomepage() == null ? "NA" : movie.getHomepage()) + "</a></br>";
-                            data += "<h5>Duration: </h5>" + (movie.getRuntime().toString() != null ? movie.getRuntime() : "NA") + " minutes</br>";
-                            data+="<hr>";
+                            data = "<hr><h4>Language: </h4>" + (movie.getOriginalLanguage() == null ? "NA" : movie.getOriginalLanguage());
+                            data += "</br>" + "<h4>Adult: </h4>" + (movie.getAdult() ? "Yes" : "No");
+                            data += "</br>" + "<h4>Overview: </h4>" + movie.getOverview() + "</br>";
+                            data += "<h4>Homepage: </h4><a href=\"" + (movie.getHomepage() == null ? "NA" : movie.getHomepage()) + "\">" + (movie.getHomepage() == null ? "NA" : movie.getHomepage()) + "</a></br>";
+                            data += "<h4>Duration: </h4>" + (movie.getRuntime() != null ? movie.getRuntime() : "NA") + " minutes</br>";
+                            data += "<hr>";
 
                             movieDetails.loadData(data, "text/html", "utf-8");
 
@@ -143,14 +147,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<MovieDetails> call, Throwable t) {
 
-                        Log.e("loading movie details", t.toString());
+                        Log.e("failed loading Mdetails", t.toString());
 
                     }
                 });
             }
 
 
-// TODO: loading reviews
             {
 
                 Call<MovieReviews> call = service.getMovieReviews(movie.getId().toString(), getString(R.string.API_KEY));
@@ -160,23 +163,35 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<MovieReviews> call, Response<MovieReviews> response) {
 
-                        System.out.println(response.body().toString());
 
                         if (response.isSuccessful()) {
 
-//                            if (response.body().getTotalResults() != 0) {
-//                                List<Review> reviews = response.body().getReviews();
-//
-//                                for (Review review : reviews) {
-//                                    TextView author = new TextView(context), content = new TextView(context);
-//                                    author.setText(review.getAuthor());
-//                                    content.setText(review.getContent());
-//                                    view.addView(author);
-//                                    view.addView(content);
-//
-//                                }
-//
-//                            }
+                            if (response.body() != null) {
+
+                                data += "<h4>Reviews</h4>";
+
+                                List<Review> results = response.body().getResults();
+
+                                for (Review review : results) {
+                                    //System.out.println(review.toString());
+
+                                    data += "<b>" + review.getAuthor() + "</b>";
+
+                                    if (review.getContent().length() > 200)
+
+                                        data += " <i>" + review.getContent().substring(0, 200) + "</i> ... <a href = \"" + review.getUrl() + "\"> read more!</a> <br><br>";
+                                    else
+                                        data += " <i>" + review.getContent() + "</i><br><br>";
+
+                                }
+
+
+                            } else {
+                                data += "<h4>No reviews available!</h4>";
+                            }
+                            data += "<hr>";
+
+                            movieDetails.loadData(data, "text/html", "utf-8");
                         }
 
                     }
@@ -184,11 +199,12 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<MovieReviews> call, Throwable t) {
 
+                        Log.e("failed loading reviews", t.toString());
+
                     }
                 });
             }
 
-            // TODO: loading videos
 
             {
                 Call<Results> call = service.getMovieVideos(movie.getId().toString(), getString(R.string.API_KEY));
@@ -198,34 +214,39 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Results> call, Response<Results> response) {
 
-                        System.out.println(response.toString());
-                        System.out.println(response.body());
 
                         if (response.isSuccessful()) {
 
-                            List<Video> videos = response.body().getVideos();
+                            List<Video> videos = response.body().getResults();
 
-                            String data="";
+                            data += "<h4>Trailers</h4><br>";
 
-//                            for(Video video:videos)
-//                            {
-//
-//
-//
-//                            }
+                            if (videos != null)
+                                for (Video video : videos) {
+
+
+                                    data += "<a href=\"http://" + video.getSite() + ".com/watch?v=" + video.getKey() + "\">" + video.getName().replaceAll("[^\\u0000-\\uFFFF]", "") + "</a><br>";
+
+
+                                }
+                            data += "<hr>";
 
                             movieDetails.loadData(data, "text/html", "utf-8");
 
-
                         }
+
 
                     }
 
                     @Override
                     public void onFailure(Call<Results> call, Throwable t) {
 
+                        Log.e("failed loading Mtrailer", t.toString());
+
                     }
                 });
+
+
             }
 
             favorite = findViewById(R.id.favButton);
@@ -295,9 +316,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
 
             }.execute(movie);
-
-
-
 
 
         } else {// TODO error while loading movie details

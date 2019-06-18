@@ -103,6 +103,20 @@ public class Video implements Serializable {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return "Video{" +
+                "id='" + id + '\'' +
+                ", iso6391='" + iso6391 + '\'' +
+                ", iso31661='" + iso31661 + '\'' +
+                ", key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", site='" + site + '\'' +
+                ", size=" + size +
+                ", type='" + type + '\'' +
+                '}';
+    }
+
     public String getSite() {
         return site;
     }
