@@ -8,8 +8,8 @@ Project is created with:
 * HTML
 
 ## Showcase and Screenshots
-![Main Screen](https://github.com/KhaledElwazan/MovieBoxBeta/blob/master/screenshots/1.jpg)
-![Main Menu](https://github.com/KhaledElwazan/MovieBoxBeta/blob/master/screenshots/2.jpg)
-![Splash Screen](https://github.com/KhaledElwazan/MovieBoxBeta/blob/master/screenshots/3.jpg)
-![Favorite Movie and Movie Details](https://github.com/KhaledElwazan/MovieBoxBeta/blob/master/screenshots/4.jpg)
-![Movie Search](https://github.com/KhaledElwazan/MovieBoxBeta/blob/master/screenshots/5.jpg)
+![Main Screen](https://github.com/KhaledElwazan/MovieBoxBeta/screenshots/1.jpeg)
+![Main Menu](https://github.com/KhaledElwazan/MovieBoxBeta/screenshots/2.jpeg)
+![Splash Screen](https://github.com/KhaledElwazan/MovieBoxBeta/screenshots/3.jpeg)
+![Favorite Movie and Movie Details](https://github.com/KhaledElwazan/MovieBoxBeta/screenshots/4.jpeg)
+![Movie Search](https://github.com/KhaledElwazan/MovieBoxBeta/screenshots/5.jpeg)
