@@ -1,6 +1,7 @@
 package com.example.movieboxbeta.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -52,8 +53,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private MovieDB movieDB;
 
     private String data = "";
+    private boolean flag1, flag2, flag3;
 
-    // TODO: create gui and infrastructure for the MovieDetails Fragment
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +119,46 @@ public class MovieDetailsActivity extends AppCompatActivity {
 // loading details
             {
 
+
+                new AsyncTask<Void, Void, Void>() {
+
+                    private ProgressDialog dialog;
+
+                    @Override
+                    protected void onPreExecute() {
+                        dialog = ProgressDialog.show(context, "Loading", "Wait while loading...");
+                    }
+
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+
+
+                        while (!flag1 && !flag2 && !flag3) {
+
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                            dialog.cancel();
+                        }
+                        movieDetails.loadData(data, "text/html", "utf-8");
+
+                    }
+                }.execute();
+
+
                 Call<MovieDetails> call = service.getMovieDetails(movie.getId().toString(), getString(R.string.API_KEY));
 
 
@@ -137,7 +178,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
                             data += "<h4>Duration: </h4>" + (movie.getRuntime() != null ? movie.getRuntime() : "NA") + " minutes</br>";
                             data += "<hr>";
 
-                            movieDetails.loadData(data, "text/html", "utf-8");
+                            flag1 = true;
+
+                            //   movieDetails.loadData(data, "text/html", "utf-8");
 
 
                         }
@@ -190,8 +233,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
                                 data += "<h4>No reviews available!</h4>";
                             }
                             data += "<hr>";
-
-                            movieDetails.loadData(data, "text/html", "utf-8");
+                            flag2 = true;
+                            //      movieDetails.loadData(data, "text/html", "utf-8");
                         }
 
                     }
@@ -230,8 +273,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
                                 }
                             data += "<hr>";
-
-                            movieDetails.loadData(data, "text/html", "utf-8");
+                            flag3 = true;
+                            //     movieDetails.loadData(data, "text/html", "utf-8");
 
                         }
 
